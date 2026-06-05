@@ -20,10 +20,11 @@ async function createProfile(user, extra = {}) {
     foto: user.photoURL || null,
     zona: extra.zona || "Málaga",
     nivel: extra.nivel || "Intermedio",
-    puntos: 1000, // base del ranking Elo
+    puntos: 1000,
     partidos: 0,
     victorias: 0,
     disponibilidad: {},
+    perfilCompleto: !!extra.zona,   // true si vino con zona (email), false si no (Google)
     creado: serverTimestamp(),
   };
   await setDoc(ref, profile);
@@ -71,5 +72,14 @@ export function traducirError(code) {
 export async function guardarDisponibilidad(uid, disponibilidad) {
   await updateDoc(doc(db, "usuarios", uid), {
     disponibilidad: disponibilidad,
+  });
+}
+
+// Completar el perfil (zona y nivel) tras registro con Google
+export async function completarPerfil(uid, zona, nivel) {
+  await updateDoc(doc(db, "usuarios", uid), {
+    zona,
+    nivel,
+    perfilCompleto: true,
   });
 }
