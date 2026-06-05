@@ -13,8 +13,16 @@ export async function getPlayers(miUid) {
     }
   });
   // Ordenar por puntos (ranking) de mayor a menor
-  jugadores.sort((a, b) => (b.puntos || 0) - (a.puntos || 0));
-  return jugadores;
+jugadores.sort((a, b) => {
+  // 1º por puntos (de mayor a menor)
+  const difPuntos = (b.puntos || 0) - (a.puntos || 0);
+  if (difPuntos !== 0) return difPuntos;
+
+  // 2º a igualdad de puntos: el que se registró ANTES va primero
+  const fechaA = a.creado?.seconds || 0;
+  const fechaB = b.creado?.seconds || 0;
+  return fechaA - fechaB; // menor (más antiguo) primero
+});  return jugadores;
 }
 
 // Lee todos los usuarios ordenados por puntos (para el ranking)
