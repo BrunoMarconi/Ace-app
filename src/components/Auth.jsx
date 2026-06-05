@@ -156,15 +156,21 @@ export default function Auth() {
                 <label className="block text-[13px] font-semibold text-txt-2 mb-1.5">
                   Zona
                 </label>
-                <select
-                  value={zona}
-                  onChange={(e) => setZona(e.target.value)}
-                  className={inputClass}
-                >
-                  <option>Alhaurín de la Torre</option>
+                <select value={zona} onChange={(e) => setZona(e.target.value)} className={inputClass}>
                   <option>Málaga capital</option>
+                  <option>Alhaurín de la Torre</option>
+                  <option>Alhaurín el Grande</option>
                   <option>Torremolinos</option>
-                  <option>Otra (Málaga)</option>
+                  <option>Benalmádena</option>
+                  <option>Fuengirola</option>
+                  <option>Mijas</option>
+                  <option>Marbella</option>
+                  <option>Estepona</option>
+                  <option>Vélez-Málaga</option>
+                  <option>Rincón de la Victoria</option>
+                  <option>Cártama</option>
+                  <option>Coín</option>
+                  <option>Antequera</option>
                 </select>
               </div>
               <div>
