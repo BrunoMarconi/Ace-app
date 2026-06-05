@@ -6,16 +6,29 @@ import { auth, db } from "../firebase";
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null); // usuario de Firebase Auth
-  const [profile, setProfile] = useState(null); // su perfil en Firestore
+  const [user, setUser] = useState(null);
+  const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  // Función para cargar el perfil, con reintentos
+  async function cargarPerfil(uid, intentos = 5) {
+    for (let i = 0; i < intentos; i++) {
+      const snap = await getDoc(doc(db, "usuarios", uid));
+      if (snap.exists()) {
+        return snap.data();
+      }
+      // Si no existe todavía (se está creando), espera un poco y reintenta
+      await new Promise((r) => setTimeout(r, 400));
+    }
+    return null;
+  }
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, async (u) => {
       setUser(u);
       if (u) {
-        const snap = await getDoc(doc(db, "usuarios", u.uid));
-        setProfile(snap.exists() ? snap.data() : null);
+        const p = await cargarPerfil(u.uid);
+        setProfile(p);
       } else {
         setProfile(null);
       }

@@ -41,6 +41,10 @@ export default function Buscar() {
   }
 
   async function retar(rival) {
+    if (!profile) {
+      alert("Espera un momento, cargando tu perfil...");
+      return;
+    }
     setRetando(rival.uid);
     try {
       await crearReto(profile, rival);
@@ -50,6 +54,7 @@ export default function Buscar() {
       alert("No se pudo enviar el reto.");
     }
     setRetando(null);
+    
   }
 
   function resumenDisp(disp) {
