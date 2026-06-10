@@ -4,8 +4,8 @@ export default {
   theme: {
     extend: {
       colors: {
-        acid: "#2563EB",
-        "acid-d": "#1D4ED8",
+        acid: "#1F7A43",
+        "acid-d": "#165C32",
         ink: "#141B2E",
         "txt-2": "#5A6478",
         "txt-3": "#9AA3B2",
